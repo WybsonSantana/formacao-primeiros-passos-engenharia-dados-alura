@@ -1,5 +1,6 @@
 import json
 import csv
+from processamento_dados import  Dados
 
 
 def ler_json(path_json):
@@ -66,12 +67,16 @@ def salvar_dados(dados, path):
 
 def main():
     # Definição do caminho dos arquivos a serem lidos
-    path_json = '..\\data\\raw\\dados_empresaA.json'
-    path_csv = '..\\data\\raw\\dados_empresaB.csv'
+    path_json = '../data/raw/dados_empresaA.json'
+    path_csv = '../data/raw/dados_empresaB.csv'
 
     # Definição do caminho dos arquivos a serem salvos
-    path_dados_combinados = '..\\data\\processed\\dados_combinados.csv'
+    path_dados_combinados = '../data/processed/dados_combinados.csv'
 
+    dados_empresa_a = Dados(path_json, 'json')
+    print(dados_empresa_a.path)
+
+    """
     # leitura do arquivo de dados no formato json e obtenção dos nomes das colunas
     print('Manipulando o arquivo json...')
     dados_json = ler_dados(path_json, 'json')
@@ -118,6 +123,7 @@ def main():
     dados_fusao_tabela = transformar_dados_tabela(dados_fusao, nomes_colunas_fusao)
     salvar_dados(dados_fusao_tabela, path_dados_combinados)
     print('Dados salvos com sucesso!')
+    """
 
 
 main()
