@@ -1,27 +1,6 @@
 import json
 import csv
-from processamento_dados import  Dados
-
-
-def ler_json(path_json):
-    with open(path_json, 'r', encoding='utf-8') as file:
-        return json.load(file)
-
-
-def ler_csv(path_csv):
-    dados_csv = []
-    with open(path_csv, 'r', encoding='utf-8') as file:
-        spam_reader = csv.DictReader(file, delimiter=',')
-        for row in spam_reader:
-            dados_csv.append(row)
-    return dados_csv
-
-
-def ler_dados(path, tipo_arquivo):
-    if tipo_arquivo == 'json':
-        return ler_json(path)
-    elif tipo_arquivo == 'csv':
-        return ler_csv(path)
+from processamento_dados import Dados
 
 
 def obter_nomes_colunas(dados):
@@ -74,7 +53,10 @@ def main():
     path_dados_combinados = '../data/processed/dados_combinados.csv'
 
     dados_empresa_a = Dados(path_json, 'json')
-    print(dados_empresa_a.path)
+    print(dados_empresa_a.dados)
+
+    dados_empresa_b = Dados(path_csv, 'csv')
+    print(dados_empresa_b.dados)
 
     """
     # leitura do arquivo de dados no formato json e obtenção dos nomes das colunas
