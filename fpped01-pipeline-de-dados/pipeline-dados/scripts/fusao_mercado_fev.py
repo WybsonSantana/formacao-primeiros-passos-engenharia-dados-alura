@@ -3,20 +3,6 @@ import csv
 from processamento_dados import Dados
 
 
-def obter_nomes_colunas(dados):
-    return list(dados[-1].keys())
-
-
-def renomear_colunas_dados_csv(dados_csv, key_mapping):
-    new_dados_csv = []
-    for old_dict in dados_csv:
-        dict_temp = {}
-        for old_key, value in old_dict.items():
-            dict_temp[key_mapping[old_key]] = value
-        new_dados_csv.append(dict_temp)
-    return new_dados_csv
-
-
 def obter_tamanho_da_base(dados):
     return len(dados)
 
@@ -53,10 +39,20 @@ def main():
     path_dados_combinados = '../data/processed/dados_combinados.csv'
 
     dados_empresa_a = Dados(path_json, 'json')
-    print(dados_empresa_a.dados)
+    print(dados_empresa_a.nomes_colunas)
 
     dados_empresa_b = Dados(path_csv, 'csv')
-    print(dados_empresa_b.dados)
+    print(dados_empresa_b.nomes_colunas)
+
+    key_mapping = {'Nome do Item': 'Nome do Produto',
+                   'Classificação do Produto': 'Categoria do Produto',
+                   'Valor em Reais (R$)': 'Preço do Produto (R$)',
+                   'Quantidade em Estoque': 'Quantidade em Estoque',
+                   'Nome da Loja': 'Filial',
+                   'Data da Venda': 'Data da Venda'}
+
+    dados_empresa_b.renomear_colunas_dados(key_mapping)
+    print(dados_empresa_b.nomes_colunas)
 
     """
     # leitura do arquivo de dados no formato json e obtenção dos nomes das colunas
