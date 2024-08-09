@@ -54,3 +54,18 @@ class Dados:
         combined_list.extend(dados_a.dados)
         combined_list.extend(dados_b.dados)
         return Dados(combined_list, 'list')
+
+    def transformar_dados_tabela(self):
+        dados_combinados_tabela = [self.nomes_colunas]
+        for row in self.dados:
+            linha = []
+            for coluna in self.nomes_colunas:
+                linha.append(row.get(coluna, 'Indisponível'))
+            dados_combinados_tabela.append(linha)
+        return dados_combinados_tabela
+
+    def salvar_dados(self, path):
+        dados_combinados_tabela = self.transformar_dados_tabela()
+        with open(path, 'w', encoding='utf-8', newline='') as file:
+            spam_writer = csv.writer(file)
+            spam_writer.writerows(dados_combinados_tabela)
