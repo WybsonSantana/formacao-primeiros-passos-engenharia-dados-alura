@@ -9,6 +9,7 @@ class Dados:
         self.tipo_dados = tipo_dados
         self.dados = self.ler_dados()
         self.nomes_colunas = self.obter_nomes_colunas()
+        self.quantidade_linhas = self.obter_tamanho_da_base()
 
     def ler_json(self):
         with open(self.path, 'r', encoding='utf-8') as file:
@@ -24,9 +25,13 @@ class Dados:
 
     def ler_dados(self):
         if self.tipo_dados == 'json':
-            return self.ler_json()
+            dados = self.ler_json()
         elif self.tipo_dados == 'csv':
-            return self.ler_csv()
+            dados = self.ler_csv()
+        elif self.tipo_dados == 'list':
+            dados = self.path
+            self.path = 'lista em memória'
+        return dados
 
     def obter_nomes_colunas(self):
         return list(self.dados[-1].keys())
@@ -40,3 +45,12 @@ class Dados:
             new_dados.append(dict_temp)
         self.dados = new_dados
         self.nomes_colunas = self.obter_nomes_colunas()
+
+    def obter_tamanho_da_base(self):
+        return len(self.dados)
+
+    def juntar_base_de_dados(dados_a, dados_b):
+        combined_list = []
+        combined_list.extend(dados_a.dados)
+        combined_list.extend(dados_b.dados)
+        return Dados(combined_list, 'list')

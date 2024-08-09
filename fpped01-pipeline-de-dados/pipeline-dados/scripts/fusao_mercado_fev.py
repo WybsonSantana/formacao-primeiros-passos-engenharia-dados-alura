@@ -1,17 +1,7 @@
 import json
 import csv
+
 from processamento_dados import Dados
-
-
-def obter_tamanho_da_base(dados):
-    return len(dados)
-
-
-def juntar_base_de_dados(dados_a, dados_b):
-    combined_list = []
-    combined_list.extend(dados_a)
-    combined_list.extend(dados_b)
-    return combined_list
 
 
 def transformar_dados_tabela(dados, nomes_colunas):
@@ -40,9 +30,11 @@ def main():
 
     dados_empresa_a = Dados(path_json, 'json')
     print(dados_empresa_a.nomes_colunas)
+    print(dados_empresa_a.quantidade_linhas)
 
     dados_empresa_b = Dados(path_csv, 'csv')
     print(dados_empresa_b.nomes_colunas)
+    print(dados_empresa_b.quantidade_linhas)
 
     key_mapping = {'Nome do Item': 'Nome do Produto',
                    'Classificação do Produto': 'Categoria do Produto',
@@ -53,6 +45,10 @@ def main():
 
     dados_empresa_b.renomear_colunas_dados(key_mapping)
     print(dados_empresa_b.nomes_colunas)
+
+    dados_fusao = Dados.juntar_base_de_dados(dados_empresa_a, dados_empresa_b)
+    print(dados_fusao.obter_nomes_colunas())
+    print(dados_fusao.obter_tamanho_da_base())
 
     """
     # leitura do arquivo de dados no formato json e obtenção dos nomes das colunas
